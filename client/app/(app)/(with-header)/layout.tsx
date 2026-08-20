@@ -1,10 +1,10 @@
-import BottomNav from "@/features/BottomNav";
+import Header from "@/features/header";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
+      <Header />
       {children}
-      <BottomNav />
     </div>
   );
 };

@@ -1,6 +1,5 @@
-// No "use client" — Server Component
-import PushNotificationManager from '@/components/pushNotificationManager'
-import InstallPrompt from '@/components/installPrompt'
+import PushNotificationManager from '@/features/pushNotificationManager'
+import InstallPrompt from '@/features/installPrompt'
 
 export default function SettingsPage() {
   return (
