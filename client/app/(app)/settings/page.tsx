@@ -1,5 +1,5 @@
-import PushNotificationManager from '@/features/pushNotificationManager'
-import InstallPrompt from '@/features/installPrompt'
+import PushNotificationManager from '@/features/PushNotificationManager'
+import InstallPrompt from '@/features/InstallPrompt'
 
 export default function SettingsPage() {
   return (
