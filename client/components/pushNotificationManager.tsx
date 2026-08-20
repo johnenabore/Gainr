@@ -66,30 +66,30 @@ export default function PushNotificationManager() {
   if (!isSupported) return null
 
   return (
-    <div className="p-4 bg-zinc-900 rounded-xl border border-zinc-800">
-      <h3 className="text-sm font-medium text-white mb-2">
+    <div className="p-4 bg-card rounded-xl border border-border">
+      <h3 className="text-sm font-medium text-foreground mb-2">
         Notifications
       </h3>
       {subscription ? (
         <div className="flex flex-col gap-2">
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-muted-foreground">
             Notifications enabled
           </p>
           <button
             onClick={unsubscribeFromPush}
-            className="text-xs text-red-400 underline text-left"
+            className="text-xs text-red-500 dark:text-red-400 underline text-left"
           >
             Disable
           </button>
         </div>
       ) : (
         <div className="flex flex-col gap-2">
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-muted-foreground">
             Get reminders to log your workouts
           </p>
           <button
             onClick={subscribeToPush}
-            className="text-xs text-blue-400 underline text-left"
+            className="text-xs text-blue-500 dark:text-blue-400 underline text-left"
           >
             Enable notifications
           </button>

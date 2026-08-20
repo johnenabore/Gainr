@@ -5,8 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 const Home = () => {
     return (
         <div  className="">
-            <Header />
-            <ThemeToggle />
+
         </div>
     )
 }

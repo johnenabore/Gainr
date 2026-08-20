@@ -19,16 +19,16 @@ export default function InstallPrompt() {
   if (isStandalone) return null
 
   return (
-    <div className="p-4 bg-zinc-900 rounded-xl border border-zinc-800">
-      <h3 className="text-sm font-medium text-white mb-1">
+    <div className="p-4 bg-card rounded-xl border border-border">
+      <h3 className="text-sm font-medium text-foreground mb-1">
         Install Gainr
       </h3>
       {isIOS ? (
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs text-muted-foreground">
           Tap the share button ⎋ then "Add to Home Screen" ➕
         </p>
       ) : (
-        <button className="text-xs text-blue-400 underline">
+        <button className="text-xs text-blue-500 dark:text-blue-400 underline">
           Add to Home Screen
         </button>
       )}
