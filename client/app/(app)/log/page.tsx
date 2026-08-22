@@ -1,4 +1,3 @@
-// app/(app)/(with-header)/routines/page.tsx
 import Link from "next/link";
 import { Plus } from "lucide-react";
 

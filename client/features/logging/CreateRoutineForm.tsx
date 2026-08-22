@@ -1,4 +1,3 @@
-// features/routines/components/CreateRoutineForm.tsx
 "use client";
 
 import { useState } from "react";
@@ -8,6 +7,9 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Plus, X, ArrowLeft, Dumbbell } from "lucide-react";
+import { AddExercisePicker } from "./AddExercisePicker";
+import { ExerciseInfoDialog } from "./ExerciseInfoDialog";
+import { getExerciseGifUrl, type ExerciseSummary } from "@/services/exercises";
 
 interface Template {
   name: string;
@@ -20,19 +22,40 @@ const templates: Template[] = [
   { name: "Leg day", exercises: ["Back squat", "Leg press", "Calf raise"] },
 ];
 
+function templateExercise(name: string): ExerciseSummary {
+  return {
+    id: name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+    name,
+    bodyPart: null,
+    equipment: null,
+    target: null,
+    secondaryMuscles: null,
+    category: null,
+    difficulty: null,
+    mechanic: null,
+    force: null,
+    met: null,
+    caloriesPerMinute: null,
+    description: null,
+    instructions: null,
+    isPlaceholder: true,
+  };
+}
+
 export function CreateRoutineForm() {
   const [title, setTitle] = useState("");
-  const [exercises, setExercises] = useState<string[]>([]);
+  const [exercises, setExercises] = useState<ExerciseSummary[]>([]);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const canSave = title.trim().length > 0 && exercises.length > 0;
 
   function applyTemplate(t: Template) {
     setTitle(t.name);
-    setExercises(t.exercises);
+    setExercises(t.exercises.map(templateExercise));
   }
 
   function addExercise() {
-    setExercises((prev) => [...prev, "New exercise"]);
+    setPickerOpen(true);
   }
 
   function removeExercise(index: number) {
@@ -90,15 +113,28 @@ export function CreateRoutineForm() {
         </Card>
       ) : (
         <div className="flex flex-col gap-2">
-          {exercises.map((name, i) => (
+          {exercises.map((ex, i) => (
             <Card key={i} className="flex flex-row items-center gap-3 px-3 py-2.5">
               <span className="w-6 font-mono text-xs text-primary">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="flex-1 text-sm">{name}</span>
+              {ex.isPlaceholder ? (
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted">
+                  <Dumbbell className="h-4 w-4 text-muted-foreground" />
+                </div>
+              ) : (
+                <img
+                  src={getExerciseGifUrl(ex.id)}
+                  alt=""
+                  loading="lazy"
+                  className="h-9 w-9 shrink-0 rounded-lg bg-muted object-cover"
+                />
+              )}
+              <span className="flex-1 text-sm">{ex.name}</span>
+              <ExerciseInfoDialog exercise={ex} />
               <button
                 onClick={() => removeExercise(i)}
-                aria-label={`Remove ${name}`}
+                aria-label={`Remove ${ex.name}`}
                 className="text-muted-foreground hover:text-foreground"
               >
                 <X className="h-4 w-4" />
@@ -112,6 +148,16 @@ export function CreateRoutineForm() {
         <Plus className="mr-1.5 h-4 w-4" />
         Add exercise
       </Button>
+
+      {pickerOpen && (
+        <AddExercisePicker
+          onSelect={(exercise) => {
+            setExercises((prev) => [...prev, exercise]);
+            setPickerOpen(false);
+          }}
+          onClose={() => setPickerOpen(false)}
+        />
+      )}
     </div>
   );
 }
